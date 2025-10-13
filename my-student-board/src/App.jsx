@@ -190,7 +190,7 @@ const SearchFilter = ({ searchTerm, setSearchTerm, placeholder }) => (
 
 
 const PageContainer = ({ title, children }) => (
-    <main className="container mx-auto px-6 py-12 flex-grow">
+    <main className="container mx-auto px-6 py-12">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 border-l-4 border-amber-600 pl-4">{title}</h1>
         {children}
     </main>
@@ -210,7 +210,7 @@ const LandingPage = ({ setPage }) => {
     const upcomingEvents = mockEvents.slice(0, 2);
 
     return (
-        <div className="bg-gray-50 flex-grow">
+        <div className="bg-gray-50">
             {/* Hero Section */}
             <div className="container mx-auto px-6 py-20 text-center">
                 <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
@@ -326,7 +326,7 @@ const AuthForm = ({ title, isLogin, setPage, handleAuth }) => {
     };
 
     return (
-        <div className="flex-grow flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="h-full flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full bg-white p-8 rounded-xl shadow-lg space-y-8">
                 <h2 className="text-center text-3xl font-extrabold text-gray-900">{title}</h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -383,6 +383,9 @@ const Dashboard = ({ user, setPage }) => {
             {children}
         </div>
     );
+
+    const latestAnnouncement = mockAnnouncements[0];
+    const upcomingEvent = mockEvents[0];
 
     return (
         <PageContainer title={`Welcome back, ${user.name}!`}>
@@ -692,13 +695,11 @@ export default function App() {
     return (
         <div className="bg-gray-50 min-h-screen flex flex-col font-sans">
             <Header setPage={setPage} user={user} logout={handleLogout} isMenuOpen={isMenuOpen} setMenuOpen={setMenuOpen} />
-            {renderPage()}
+            <main className="flex-grow">
+                {renderPage()}
+            </main>
             <Footer />
         </div>
     );
 }
-
-
-
-
 
