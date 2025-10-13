@@ -316,28 +316,23 @@ const LandingPage = ({ setPage }) => {
 const AuthForm = ({ title, isLogin, setPage, handleAuth }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
-    const [error, setError] = useState('');
+    const [name, setName] = useState(''); // For registration
     const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setError('');
-        const success = handleAuth({ name, email, password });
-        if (!success) {
-            setError(isLogin ? "Invalid credentials. Please try again." : "User already exists or invalid data.");
-        }
+        const credentials = isLogin ? { email, password } : { name, email, password };
+        handleAuth(credentials);
     };
 
     return (
-        <div className="flex-grow flex items-center justify-center bg-gray-50 py-12">
-            <div className="max-w-md w-full bg-white p-8 rounded-xl shadow-lg">
-                <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">{title}</h2>
-                {error && <p className="bg-red-100 text-red-700 p-3 rounded-md mb-4 text-center">{error}</p>}
+        <div className="flex-grow flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-md w-full bg-white p-8 rounded-xl shadow-lg space-y-8">
+                <h2 className="text-center text-3xl font-extrabold text-gray-900">{title}</h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {!isLogin && (
                         <div>
-                             <label className="text-sm font-medium text-gray-700">Full Name</label>
+                         <label className="text-sm font-medium text-gray-700">Full Name</label>
                          <div className="mt-1 relative">
                                 <Icon name="user" className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"/>
                                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} required className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-amber-500"/>
@@ -356,7 +351,7 @@ const AuthForm = ({ title, isLogin, setPage, handleAuth }) => {
                          <div className="mt-1 relative">
                              <Icon name="lock" className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"/>
                             <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-amber-500"/>
-                            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                            <button type="button" onClick={() => setShowPassword(!setShowPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                                 <Icon name={showPassword ? 'eye-off' : 'eye'} className="w-5 h-5"/>
                             </button>
                          </div>
@@ -365,7 +360,7 @@ const AuthForm = ({ title, isLogin, setPage, handleAuth }) => {
                         {title}
                     </button>
                 </form>
-                <p className="text-center text-sm text-gray-600 mt-6">
+                <p className="text-center text-sm text-gray-600">
                     {isLogin ? "Don't have an account?" : "Already have an account?"}
                     <a href="#" onClick={(e) => { e.preventDefault(); setPage(isLogin ? 'register' : 'login'); }} className="font-medium text-amber-600 hover:underline ml-1">
                         {isLogin ? 'Register' : 'Login'}
@@ -377,9 +372,6 @@ const AuthForm = ({ title, isLogin, setPage, handleAuth }) => {
 };
 
 const Dashboard = ({ user, setPage }) => {
-    const latestAnnouncement = mockAnnouncements[0];
-    const upcomingEvent = mockEvents[0];
-
     const DashboardCard = ({ title, iconName, children, pageLink }) => (
         <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow cursor-pointer" onClick={() => setPage(pageLink)}>
             <div className="flex items-center space-x-4 mb-4">
@@ -705,6 +697,7 @@ export default function App() {
         </div>
     );
 }
+
 
 
 
