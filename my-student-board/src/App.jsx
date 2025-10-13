@@ -190,7 +190,7 @@ const SearchFilter = ({ searchTerm, setSearchTerm, placeholder }) => (
 
 
 const PageContainer = ({ title, children }) => (
-    <main className="container mx-auto px-6 py-12">
+    <main className="w-full max-w-5xl mx-auto px-6 py-12 flex-grow">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 border-l-4 border-amber-600 pl-4">{title}</h1>
         {children}
     </main>
@@ -694,10 +694,12 @@ export default function App() {
     
     return (
         <div className="bg-gray-50 min-h-screen flex flex-col font-sans">
-            <Header setPage={setPage} user={user} logout={handleLogout} isMenuOpen={isMenuOpen} setMenuOpen={setMenuOpen} />
-            <main className="flex-grow">
+            <div className="w-full max-w-7xl mx-auto">
+                <Header setPage={setPage} user={user} logout={handleLogout} isMenuOpen={isMenuOpen} setMenuOpen={setMenuOpen} />
+            </div>
+            <div className="w-full">
                 {renderPage()}
-            </main>
+            </div>
             <Footer />
         </div>
     );
